@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
 
@@ -8,12 +9,12 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		try{
 		FileWriter fsortie = new FileWriter("lena2.pgm");
 		FileReader fentree = new FileReader("lena.pgm");
 		BufferedReader in  = new BufferedReader(fentree);
 		
-		String line;
+		String line = "";
 		 //lecture du header
 		for(int i=0;i<3;i++){
 		line = in.readLine();
@@ -27,6 +28,9 @@ public class Main {
 		int hauteur = Integer.parseInt(size[0]);
 		int largeur = Integer.parseInt(size[1]);
 		
+		line = in.readLine();
+		fsortie.write(line + "\n");
+		
 		int[][] image = new int[hauteur][largeur];
 		
 		//lire le tableau de pixel
@@ -37,10 +41,17 @@ public class Main {
 			
 			//stocker les valeurs dans le tableau image
 			String[] pixels = new String[largeur];
-			pixels = line.split(" ", largeur);
+			pixels = line.split("\t", largeur);
 			for(int j=0;j<largeur;j++){
 				image[i][j]=Integer.parseInt(pixels[j]);
 			}
+		}
+		
+		fentree.close();
+		fsortie.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
 		}
 		
 
